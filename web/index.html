@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html ng-app="examApp" ng-controller="ExamController as ctrl">
+    <head lang="en">
+        <meta charset="UTF-8">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-mocks.js"></script>
+        <script src="https://code.angularjs.org/1.4.7/i18n/angular-locale_da.js"></script>
+        <script src="app.js"></script>
+        <title>{{ctrl.title}}</title>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Grades</h1>
+            <input type="search" ng-model="studentfilter" placeholder="Filter Students">
+
+            <div class="col-md-9">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td><a href="" ng-click="ctrl.predicate = 'id'; ctrl.reverse = !ctrl.reverse">ID</a></td>
+                            <td><a href="" ng-click="ctrl.predicate = 'name'; ctrl.reverse = !ctrl.reverse">Name</a></td>
+                            <td ng-repeat="c in ctrl.courseInfo"><a href="" ng-click="ctrl.predicate = c.courseName; ctrl.reverse = !ctrl.reverse">{{c.courseName}}</a></td>
+                            <td><a href="" ng-click="ctrl.predicate = 'average'; ctrl.reverse = !ctrl.reverse">Average</a></td>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        <tr  ng-repeat="student in ctrl.studentsInfo.students| filter: studentfilter | orderBy:ctrl.predicate:ctrl.reverse">
+                            <td>{{student.studentId}}</td>
+                            <td>{{student.name}}</td>
+                            <td ng-repeat="g in student.grades">{{g.grade}}</td>
+                            <td>{{student.grades | average | number : 2}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h4>Sort Column: {{ctrl.predicate}}</h4>
+                <h4>Reverse: {{ctrl.reverse}}</h4>
+            </div>  
+        </div>    
+    </body>
+</html>
